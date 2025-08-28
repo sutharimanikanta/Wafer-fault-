@@ -17,14 +17,14 @@ class Preprocessor:
 
     def remove_columns(self,data,columns):
         """
-                Method Name: remove_columns
-                Description: This method removes the given columns from a pandas dataframe.
-                Output: A pandas DataFrame after removing the specified columns.
-                On Failure: Raise Exception
 
-                Written By: Manikant Kumar http://manikant.codes
-                Version: 1.0
-                Revisions: None
+        Method Name: remove_columns
+        Description: This method removes the given columns from a pandas dataframe.
+        Output: A pandas DataFrame after removing the specified columns.
+        On Failure: Raise Exception
+        Written By: Manikant Kumar http://manikant.codes
+        Version: 1.0
+        Revisions: None
 
         """
         self.logger_object.log(self.file_object, 'Entered the remove_columns method of the Preprocessor class')
@@ -57,6 +57,7 @@ class Preprocessor:
         try:
             self.X=data.drop(labels=label_column_name,axis=1) # drop the columns specified and separate the feature columns
             self.Y=data[label_column_name] # Filter the Label columns
+            self.Y = self.Y.replace(-1, 0)
             self.logger_object.log(self.file_object,
                                    'Label Separation Successful. Exited the separate_label_feature method of the Preprocessor class')
             return self.X,self.Y
@@ -67,16 +68,16 @@ class Preprocessor:
 
     def is_null_present(self,data):
         """
-                                Method Name: is_null_present
-                                Description: This method checks whether there are null values present in the pandas Dataframe or not.
-                                Output: Returns a Boolean Value. True if null values are present in the DataFrame, False if they are not present.
-                                On Failure: Raise Exception
+        Method Name: is_null_present
+        Description: This method checks whether there are null values present in the pandas Dataframe or not.
+        Output: Returns a Boolean Value. True if null values are present in the DataFrame, False if they are not present.
+        On Failure: Raise Exception
 
-                                Written By: Manikant Kumar http://manikant.codes
-                                Version: 1.0
-                                Revisions: None
+        Written By: Manikant
+        Version: 1.0
+        Revisions: None
 
-                        """
+        """
         self.logger_object.log(self.file_object, 'Entered the is_null_present method of the Preprocessor class')
         self.null_present = False
         try:

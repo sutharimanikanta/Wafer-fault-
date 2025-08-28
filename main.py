@@ -1,4 +1,3 @@
-
 import os
 from prediction_Validation_Insertion import pred_validation
 from trainingModel import trainModel
@@ -40,7 +39,6 @@ def predictRouteClient():
         print("Error Occurred! %s" %e)
 
 
-
 def trainRouteClient():
     key = input('Enter y to used inbuilt wafer dataset or any key to used own dataset: ')
     ag2=fg('green_3b')+ 'Please enter releative or absolute path for training datasets folder:' + attr('reset')
@@ -70,7 +68,7 @@ def trainRouteClient():
     except Exception as e:
 
         print("Error Occurred! %s" % e)
-    
+
 if __name__ == "__main__":
     n = len(sys.argv)
 
@@ -97,6 +95,26 @@ if __name__ == "__main__":
 
         '''
         print (fg('green_3b')+text + attr('reset'))
-    
+""" 
+# 1. Clone the project
+git clone https://github.com/devil-cyber/WaferFaultDetection.git
+cd WaferFaultDetection
 
+# 2. Create a virtual environment (named .venv)
+uv venv
 
+# 3. Activate the virtual environment
+# Windows PowerShell:
+.venv\Scripts\Activate.ps1
+# OR for Command Prompt (CMD):
+.venv\Scripts\activate.bat
+
+# 4. Install all required dependencies from requirements.txt using uv
+uv pip install -r requirements.txt
+
+# 5. Train the model
+python main.py --train
+
+# 6. Predict using the model
+python main.py --predict
+"""

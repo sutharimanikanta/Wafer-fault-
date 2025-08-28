@@ -5,13 +5,13 @@ from file_operations import file_methods
 
 class KMeansClustering:
     """
-            This class shall  be used to divide the data into clusters before training.
+    This class shall  be used to divide the data into clusters before training.
 
-            Written By: Manikant Kumar http://manikant.codes
-            Version: 1.0
-            Revisions: None
+    Written By: Manikant
+    Version: 1.0
+    Revisions: None
 
-            """
+    """
 
     def __init__(self, file_object, logger_object):
         self.file_object = file_object
@@ -19,16 +19,16 @@ class KMeansClustering:
 
     def elbow_plot(self,data):
         """
-                        Method Name: elbow_plot
-                        Description: This method saves the plot to decide the optimum number of clusters to the file.
-                        Output: A picture saved to the directory
-                        On Failure: Raise Exception
+        Method Name: elbow_plot
+        Description: This method saves the plot to decide the optimum number of clusters to the file.
+        Output: A picture saved to the directory
+        On Failure: Raise Exception
 
-                        Written By: Manikant Kumar http://manikant.codes
-                        Version: 1.0
-                        Revisions: None
+        Written By: Manikant
+        Version: 1.0
+        Revisions: None
 
-                """
+        """
         self.logger_object.log(self.file_object, 'Entered the elbow_plot method of the KMeansClustering class')
         wcss=[] # initializing an empty list
         try:
@@ -40,7 +40,7 @@ class KMeansClustering:
             plt.title('The Elbow Method')
             plt.xlabel('Number of clusters')
             plt.ylabel('WCSS')
-            #plt.show()
+            # plt.show()
             plt.savefig('preprocessing_data/K-Means_Elbow.PNG') # saving the elbow plot locally
             # finding the value of the optimum cluster programmatically
             self.kn = KneeLocator(range(1, 11), wcss, curve='convex', direction='decreasing')
@@ -68,12 +68,12 @@ class KMeansClustering:
         self.data=data
         try:
             self.kmeans = KMeans(n_clusters=number_of_clusters, init='k-means++', random_state=42)
-            #self.data = self.data[~self.data.isin([np.nan, np.inf, -np.inf]).any(1)]
+            # self.data = self.data[~self.data.isin([np.nan, np.inf, -np.inf]).any(1)]
             self.y_kmeans=self.kmeans.fit_predict(data) #  divide data into clusters
 
             self.file_op = file_methods.File_Operation(self.file_object,self.logger_object)
             self.save_model = self.file_op.save_model(self.kmeans, 'KMeans') # saving the KMeans model to directory
-                                                                                    # passing 'Model' as the functions need three parameters
+            # passing 'Model' as the functions need three parameters
 
             self.data['Cluster']=self.y_kmeans  # create a new column in dataset for storing the cluster information
             self.logger_object.log(self.file_object, 'succesfully created '+str(self.kn.knee)+ 'clusters. Exited the create_clusters method of the KMeansClustering class')

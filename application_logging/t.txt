@@ -1,0 +1,1 @@
+the file will get the current time and time stamp the results

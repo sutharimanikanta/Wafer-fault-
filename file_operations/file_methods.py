@@ -2,17 +2,16 @@ import pickle
 import os
 import shutil
 
-
+# C:\Users\MANIKANTA\Desktop\wafer\WaferFaultDetection\file_operations
 class File_Operation:
     """
-                This class shall be used to save the model after training
-                and load the saved model for prediction.
+    This class shall be used to save the model after training
+    and load the saved model for prediction.
+    Written By: Manikant
+    Version: 1.0
+    Revisions: None
 
-                Written By: Manikant Kumar http://manikant.codes
-                Version: 1.0
-                Revisions: None
-
-                """
+    """
     def __init__(self,file_object,logger_object):
         self.file_object = file_object
         self.logger_object = logger_object
@@ -20,15 +19,15 @@ class File_Operation:
 
     def save_model(self,model,filename):
         """
-            Method Name: save_model
-            Description: Save the model file to directory
-            Outcome: File gets saved
-            On Failure: Raise Exception
+        Method Name: save_model
+        Description: Save the model file to directory
+        Outcome: File gets saved
+        On Failure: Raise Exception
 
-            Written By: Manikant Kumar http://manikant.codes
-            Version: 1.0
-            Revisions: None
-"""
+        Written By: Manikant
+        Version: 1.0
+        Revisions: None
+        """
         self.logger_object.log(self.file_object, 'Entered the save_model method of the File_Operation class')
         try:
             path = os.path.join(self.model_directory,filename) #create seperate directory for each cluster
@@ -62,10 +61,15 @@ class File_Operation:
         """
         self.logger_object.log(self.file_object, 'Entered the load_model method of the File_Operation class')
         try:
-            with open(self.model_directory + filename + '/' + filename + '.sav',
-                      'rb') as f:
-                self.logger_object.log(self.file_object,
-                                       'Model File ' + filename + ' loaded. Exited the load_model method of the Model_Finder class')
+            with open(
+                self.model_directory + filename + "/" + filename + ".sav", "rb"
+            ) as f:
+                self.logger_object.log(
+                    self.file_object,
+                    "Model File "
+                    + filename
+                    + " loaded. Exited the load_model method of the Model_Finder class",
+                )
                 return pickle.load(f)
         except Exception as e:
             self.logger_object.log(self.file_object,

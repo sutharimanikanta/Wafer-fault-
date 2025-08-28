@@ -8,38 +8,33 @@ import shutil
 import pandas as pd
 from application_logging.logger import App_Logger
 
-
-
-
-
 class Prediction_Data_validation:
     """
-               This class shall be used for handling all the validation done on the Raw Prediction Data!!.
+    This class shall be used for handling all the validation done on the Raw Prediction Data!!.
 
-               Written By: Manikant Kumar http://manikant.codes
-               Version: 1.0
-               Revisions: None
+    Written By: Manikant
+    Version: 1.0
+    Revisions: None
 
-               """
+    """
 
     def __init__(self,path):
         self.Batch_Directory = path
         self.schema_path = 'schema_prediction.json'
         self.logger = App_Logger()
 
-
     def valuesFromSchema(self):
         """
-                                Method Name: valuesFromSchema
-                                Description: This method extracts all the relevant information from the pre-defined "Schema" file.
-                                Output: LengthOfDateStampInFile, LengthOfTimeStampInFile, column_names, Number of Columns
-                                On Failure: Raise ValueError,KeyError,Exception
+        Method Name: valuesFromSchema
+        Description: This method extracts all the relevant information from the pre-defined "Schema" file.
+        Output: LengthOfDateStampInFile, LengthOfTimeStampInFile, column_names, Number of Columns
+        On Failure: Raise ValueError,KeyError,Exception
 
-                                 Written By: Manikant Kumar http://manikant.codes
-                                Version: 1.0
-                                Revisions: None
+        Written By: Manikant
+        Version: 1.0
+        Revisions: None
 
-                                        """
+        """
         try:
             with open(self.schema_path, 'r') as f:
                 dic = json.load(f)
@@ -55,9 +50,6 @@ class Prediction_Data_validation:
             self.logger.log(file,message)
 
             file.close()
-
-
-
         except ValueError:
             file = open("Prediction_Logs/valuesfromSchemaValidationLog.txt", 'a+')
             self.logger.log(file,"ValueError:Value not found inside schema_training.json")
@@ -77,7 +69,6 @@ class Prediction_Data_validation:
             raise e
 
         return LengthOfDateStampInFile, LengthOfTimeStampInFile, column_names, NumberofColumns
-
 
     def manualRegexCreation(self):
 
@@ -99,18 +90,18 @@ class Prediction_Data_validation:
     def createDirectoryForGoodBadRawData(self):
 
         """
-                                        Method Name: createDirectoryForGoodBadRawData
-                                        Description: This method creates directories to store the Good Data and Bad Data
-                                                      after validating the prediction data.
+        Method Name: createDirectoryForGoodBadRawData
+        Description: This method creates directories to store the Good Data and Bad Data
+                      after validating the prediction data. this will store the prediction
 
-                                        Output: None
-                                        On Failure: OSError
+        Output: None
+        On Failure: OSError
 
-                                         Written By: Manikant Kumar http://manikant.codes
-                                        Version: 1.0
-                                        Revisions: None
+         Written By: Manikant
+        Version: 1.0
+        Revisions: None
 
-                                                """
+        """
         try:
             path = os.path.join("Prediction_Raw_Files_Validated/", "Good_Raw/")
             if not os.path.isdir(path):
@@ -124,21 +115,21 @@ class Prediction_Data_validation:
             self.logger.log(file,"Error while creating Directory %s:" % ex)
             file.close()
             raise OSError
-
     def deleteExistingGoodDataTrainingFolder(self):
         """
-                                            Method Name: deleteExistingGoodDataTrainingFolder
-                                            Description: This method deletes the directory made to store the Good Data
-                                                          after loading the data in the table. Once the good files are
-                                                          loaded in the DB,deleting the directory ensures space optimization.
-                                            Output: None
-                                            On Failure: OSError
+        Method Name: deleteExistingGoodDataTrainingFolder
+        Description: This method deletes the directory made to store the Good Data
+                      after loading the data in the table. Once the good files are
+                      loaded in the DB,deleting the directory ensures space optimization.
+                      yes, exactly ✅ — the method deleteExistingGoodDataTrainingFolder will permanently delete the Good_Raw folder, including all the raw data files inside it.
+        Output: None
+        On Failure: OSError
 
-                                             Written By: Manikant Kumar http://manikant.codes
-                                            Version: 1.0
-                                            Revisions: None
+         Written By: Manikant Kumar http://manikant.codes
+        Version: 1.0
+        Revisions: None
 
-                                                    """
+        """
         try:
             path = 'Prediction_Raw_Files_Validated/'
             # if os.path.isdir("ids/" + userName):
@@ -157,16 +148,16 @@ class Prediction_Data_validation:
     def deleteExistingBadDataTrainingFolder(self):
 
         """
-                                            Method Name: deleteExistingBadDataTrainingFolder
-                                            Description: This method deletes the directory made to store the bad Data.
-                                            Output: None
-                                            On Failure: OSError
+        Method Name: deleteExistingBadDataTrainingFolder
+        Description: This method deletes the directory made to store the bad Data.
+        Output: None
+        On Failure: OSError
 
-                                             Written By: Manikant Kumar http://manikant.codes
-                                            Version: 1.0
-                                            Revisions: None
+         Written By: Manikant
+        Version: 1.0
+        Revisions: None
 
-                                                    """
+        """
 
         try:
             path = 'Prediction_Raw_Files_Validated/'
@@ -182,21 +173,19 @@ class Prediction_Data_validation:
             raise OSError
 
     def moveBadFilesToArchiveBad(self):
+        """
+        Method Name: moveBadFilesToArchiveBad
+        Description: This method deletes the directory made  to store the Bad Data
+                      after moving the data in an archive folder. We archive the bad
+                      files to send them back to the client for invalid data issue.
+        Output: None
+        On Failure: OSError
 
+         Written By: Manikant
+        Version: 1.0
+        Revisions: None
 
         """
-                                            Method Name: moveBadFilesToArchiveBad
-                                            Description: This method deletes the directory made  to store the Bad Data
-                                                          after moving the data in an archive folder. We archive the bad
-                                                          files to send them back to the client for invalid data issue.
-                                            Output: None
-                                            On Failure: OSError
-
-                                             Written By: Manikant Kumar http://manikant.codes
-                                            Version: 1.0
-                                            Revisions: None
-
-                                                    """
         now = datetime.now()
         date = now.date()
         time = now.strftime("%H%M%S")
@@ -225,21 +214,18 @@ class Prediction_Data_validation:
             file.close()
             raise OSError
 
-
-
-
     def validationFileNameRaw(self,regex,LengthOfDateStampInFile,LengthOfTimeStampInFile):
         """
-            Method Name: validationFileNameRaw
-            Description: This function validates the name of the prediction csv file as per given name in the schema!
-                         Regex pattern is used to do the validation.If name format do not match the file is moved
-                         to Bad Raw Data folder else in Good raw data.
-            Output: None
-            On Failure: Exception
+        Method Name: validationFileNameRaw
+        Description: This function validates the name of the prediction csv file as per given name in the schema!
+                     Regex pattern is used to do the validation.If name format do not match the file is moved
+                     to Bad Raw Data folder else in Good raw data.
+        Output: None
+        On Failure: Exception
 
-             Written By: Manikant Kumar http://manikant.codes
-            Version: 1.0
-            Revisions: None
+         Written By: Manikant
+        Version: 1.0
+        Revisions: None
 
         """
         # delete the directories for good and bad data in case last run was unsuccessful and folders were not deleted.
@@ -275,9 +261,6 @@ class Prediction_Data_validation:
             self.logger.log(f, "Error occured while validating FileName %s" % e)
             f.close()
             raise e
-
-
-
 
     def validateColumnLength(self,NumberofColumns):
         """
@@ -368,16 +351,3 @@ class Prediction_Data_validation:
             f.close()
             raise e
         f.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
